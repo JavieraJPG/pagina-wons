@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encuesta tu Nombre Wons</title>
+    <link rel="stylesheet" href="static/CSS/style.css" />
+</head>
+
+<body>
+
+    <!-- VIDEO DE FONDO ANIMADO -->
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="static/videos/pinterest-video.mp4" type="video/mp4" />
+    </video>
+
+    <!-- MÚSICA DE FONDO -->
+    <audio id="bgMusic" loop>
+        <source src="static/audio/ATEEZ - HALAZIA  Instrumental - WONNIE THE WORLD.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- IMPORTANTE: id="quizWrapper" para cambiar tema según equipo -->
+    <div class="quiz-wrapper" id="quizWrapper">
+
+        <!-- BARRA SUPERIOR -->
+        <div class="top-bar">
+            <div class="title">Encuesta tu Nombre Wons</div>
+            <button id="musicToggle" class="music-btn">🎵 Música: OFF</button>
+        </div>
+
+        <!-- BARRA DE PROGRESO -->
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+
+        <!-- PREGUNTA / MENSAJE -->
+        <div class="question-bubble fade-in" id="questionText"></div>
+
+        <!-- RESPUESTAS o RULETA -->
+        <div class="answers fade-in" id="answersContainer"></div>
+
+        <!-- TEXTO DE PROGRESO -->
+        <div class="progress" id="progressText"></div>
+
+        <!-- PANEL PARA 7 PERSONAS -->
+        <div class="players-panel">
+            <button id="nextPlayerBtn" class="next-btn" style="display:none;">
+                Siguiente equipo
+            </button>
+            <div id="assignmentsList" class="assignments-list"></div>
+        </div>
+    </div>
+
+    <script src="static/js/script.js"></script>
+</body>
+
+</html>
