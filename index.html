@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Encuesta tu Nombre Wons</title>
+    <title>Encuentra a tu equipo</title>
+    <link rel="icon" type="image/png" href="static/images/icono.png" />
     <link rel="stylesheet" href="static/CSS/style.css" />
 </head>
 
@@ -25,7 +26,10 @@
 
         <!-- BARRA SUPERIOR -->
         <div class="top-bar">
-            <div class="title">Encuesta tu Nombre Wons</div>
+            <div class="top-left">
+                <img src="static/images/icono.png" alt="Logo Wonlimpiadas" class="top-icon" />
+                <div class="title">Wonlimpiadas 2026 Encuentra tu equipo</div>
+            </div>
             <button id="musicToggle" class="music-btn">🎵 Música: OFF</button>
         </div>
 
@@ -50,6 +54,11 @@
             </button>
             <div id="assignmentsList" class="assignments-list"></div>
         </div>
+    </div>
+
+    <div class="team-video-overlay" id="teamVideoOverlay">
+        <video id="teamVideo" preload="auto"></video>
+        <button class="skip-video-btn" id="skipVideoBtn">Saltar presentación</button>
     </div>
 
     <script src="static/js/script.js"></script>

@@ -1,3 +1,14 @@
+@font-face {
+    font-family: "ArnelStamp";
+    src: url("../fonts/Arnel-Stamp.otf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --ui-scale: 1.75;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -9,6 +20,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
     background: #000;
     color: #fff;
 }
@@ -39,6 +51,8 @@ body {
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
     transition: background 0.4s ease, box-shadow 0.4s ease;
+    transform: scale(var(--ui-scale));
+    transform-origin: center;
 }
 
 /* TOP BAR */
@@ -47,6 +61,20 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.top-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
 }
 
 .title {
@@ -97,6 +125,7 @@ body {
     padding: 20px 30px;
     border-radius: 40px;
     font-size: 1.3rem;
+    font-family: "ArnelStamp", system-ui, sans-serif;
     margin-bottom: 40px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
@@ -267,6 +296,18 @@ body {
     }
 }
 
+@media (max-width: 900px) {
+    :root {
+        --ui-scale: 1.2;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --ui-scale: 1;
+    }
+}
+
 /* ====== PANTALLA FINAL WONSLIMPIADAS ====== */
 .final-message {
     font-size: 1.05rem;
@@ -283,6 +324,26 @@ body {
 }
 .final-team-item {
     opacity: 0.95;
+}
+
+.intro-text {
+    font-weight: 600;
+    background: linear-gradient(90deg, #ff52ff, #52d3ff, #ffe066, #ff8a00);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: neonGradientMove 4s linear infinite;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}
+
+@keyframes neonGradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 
@@ -304,4 +365,50 @@ body {
     background: #ffffff30;
     transform: translateY(-1px);
     box-shadow: 0 0 18px rgba(255, 255, 255, 0.9);
+}
+
+/* ====== VIDEO DE PRESENTACIÓN ====== */
+.team-video-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 20;
+}
+
+.team-video-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.team-video-overlay video {
+    width: min(900px, 90vw);
+    max-height: 80vh;
+    border-radius: 18px;
+    box-shadow: 0 0 26px rgba(255, 255, 255, 0.4);
+    background: #000;
+}
+
+.skip-video-btn {
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: 1px solid #ffffffaa;
+    background: #ffffff15;
+    color: #fff;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.skip-video-btn:hover {
+    background: #ffffff35;
+    transform: translateY(-1px);
 }

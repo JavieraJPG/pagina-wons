@@ -57,6 +57,18 @@ const teams = [
     { name: "Wons United", color: "#ff80ab" }               // rosado
 ];
 
+// Ruta de video por equipo (por ahora todos apuntan al placeholder hasta tener material final)
+const fallbackTeamVideo = "static/videos/pinterest-video.mp4";
+const teamVideos = {
+    "Apóstoles de Nashito": fallbackTeamVideo,
+    "Los Loleros": fallbackTeamVideo,
+    "Callampa FC": fallbackTeamVideo,
+    "Deportes Chuchunco City": fallbackTeamVideo,
+    "Enanito FC": fallbackTeamVideo,
+    "Orgullo CDF": fallbackTeamVideo,
+    "Wons United": fallbackTeamVideo
+};
+
 // ===============================
 // VARIABLES DE ESTADO
 // ===============================
@@ -76,6 +88,11 @@ const quizWrapper = document.getElementById("quizWrapper");
 
 const nextPlayerBtn = document.getElementById("nextPlayerBtn");
 const assignmentsList = document.getElementById("assignmentsList");
+const teamVideoOverlay = document.getElementById("teamVideoOverlay");
+const teamVideo = document.getElementById("teamVideo");
+const skipVideoBtn = document.getElementById("skipVideoBtn");
+let awaitingVideoCompletion = false;
+let pendingTeam = null;
 
 // Estilos por defecto del cuadro
 const DEFAULT_BG = "rgba(20, 0, 40, 0.55)";
@@ -219,6 +236,124 @@ function updateAssignmentsUI() {
 }
 
 // ===============================
+// TRANSICIÓN CON VIDEO DE EQUIPO
+// ===============================
+function showTeamVideoTransition(team) {
+    if (!team) {
+        finalizeTeamAssignment();
+        return;
+    }
+
+    const videoSrc = teamVideos[team.name] || fallbackTeamVideo;
+
+    if (!teamVideo || !teamVideoOverlay) {
+        finalizeTeamAssignment();
+        return;
+    }
+
+    if (teamVideo.getAttribute("src") !== videoSrc) {
+        teamVideo.setAttribute("src", videoSrc);
+    }
+    teamVideo.load();
+
+    awaitingVideoCompletion = true;
+    teamVideoOverlay.classList.add("visible");
+    teamVideo.currentTime = 0;
+
+    const playPromise = teamVideo.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {
+            onTeamVideoFinished();
+        });
+    }
+}
+
+function hideTeamVideoOverlay() {
+    if (teamVideo) {
+        teamVideo.pause();
+        teamVideo.currentTime = 0;
+    }
+    if (teamVideoOverlay) {
+        teamVideoOverlay.classList.remove("visible");
+    }
+}
+
+function onTeamVideoFinished() {
+    if (!awaitingVideoCompletion) return;
+    awaitingVideoCompletion = false;
+    hideTeamVideoOverlay();
+    finalizeTeamAssignment();
+}
+
+// ===============================
+// ASIGNACIÓN Y FINALIZACIÓN
+// ===============================
+function selectTeamForCurrentRun() {
+    const availableTeams = teams.filter(
+        (t) => !assignedTeams.some((a) => a.name === t.name)
+    );
+    if (availableTeams.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * availableTeams.length);
+    return availableTeams[randomIndex];
+}
+
+function startTeamVideoSequence() {
+    pendingTeam = selectTeamForCurrentRun();
+
+    progressFill.style.width = "100%";
+    progressText.textContent = "Reproduciendo la presentación del equipo...";
+    questionText.textContent = "¡Descubre a tu equipo en el video!";
+    answersContainer.innerHTML = "";
+    answersContainer.classList.remove("roulette-mode");
+    applyFadeAnimation();
+
+    if (!pendingTeam) {
+        finalizeTeamAssignment();
+        return;
+    }
+
+    showTeamVideoTransition(pendingTeam);
+}
+
+function finalizeTeamAssignment() {
+    if (!pendingTeam) {
+        if (runCount >= 7) {
+            showFinalScreen();
+        }
+        return;
+    }
+
+    const finalTeam = pendingTeam;
+    pendingTeam = null;
+
+    runCount++;
+    assignedTeams.push({
+        run: runCount,
+        name: finalTeam.name,
+        color: finalTeam.color
+    });
+
+    updateAssignmentsUI();
+    applyTeamTheme(finalTeam);
+    launchConfetti(finalTeam.color);
+
+    answersContainer.innerHTML = "";
+    questionText.textContent = "Presentación completada.";
+    progressText.textContent =
+        runCount < 7
+            ? 'Presiona "Siguiente equipo" para continuar.'
+            : "Todos los equipos ya tienen presentación.";
+    applyFadeAnimation();
+
+    if (runCount < 7) {
+        nextPlayerBtn.style.display = "inline-block";
+    } else {
+        nextPlayerBtn.style.display = "none";
+        setTimeout(showFinalScreen, 1500);
+    }
+}
+
+// ===============================
 // PANTALLA FINAL WONSLIMPIADAS
 // ===============================
 function showFinalScreen() {
@@ -283,9 +418,10 @@ function showIntro() {
     introText.style.fontSize = "0.98rem";
     introText.style.marginTop = "4px";
     introText.style.opacity = "0.95";
+    introText.className = "intro-text";
     introText.innerText =
-        "Según lo que respondan en la encuesta, se les asignará un nombre y un color oficial para su equipo. " +
-        "Líder, responde sabiamente: tus respuestas serán analizadas para definir la identidad de tu equipo.";
+        "Según lo que respondas, se les asignará un Equipo oficial a ti y a tu compañero. " +
+        "Líder, debes responder sabiamente, tus respuestas serán analizadas para definir la identidad de tu equipo.";
 
     const startBtn = document.createElement("button");
     startBtn.className = "start-btn";
@@ -315,7 +451,7 @@ function renderQuestion() {
     }
 
     if (currentIndex >= questions.length) {
-        spinRoulette();
+        startTeamVideoSequence();
         return;
     }
 
@@ -345,95 +481,6 @@ function renderQuestion() {
 }
 
 // ===============================
-// RULETA FINAL
-// ===============================
-function spinRoulette() {
-    const availableTeams = teams.filter(
-        (t) => !assignedTeams.some((a) => a.name === t.name)
-    );
-
-    progressFill.style.width = "100%";
-    progressText.textContent = "Calculando tu destino... 🧠";
-
-    questionText.textContent = "Felicidades, por lo que escogiste perteneces a:";
-
-    answersContainer.innerHTML = "";
-    answersContainer.classList.add("fade-in", "roulette-mode");
-
-    const box = document.createElement("div");
-    box.className = "roulette-box";
-
-    const label = document.createElement("div");
-    label.className = "roulette-label";
-    label.textContent = "Girando la ruleta de equipos...";
-
-    const text = document.createElement("div");
-    text.className = "roulette-text";
-
-    box.appendChild(label);
-    box.appendChild(text);
-    answersContainer.appendChild(box);
-
-    let index = 0;
-    let spins = 0;
-    const totalSpins = 22 + Math.floor(Math.random() * 10);
-
-    const interval = setInterval(() => {
-        const currentTeam = availableTeams[index % availableTeams.length];
-
-        miniConfetti(currentTeam.color);
-
-        if (currentTeam.color === "#000000") {
-            text.textContent = currentTeam.name;
-            text.style.color = "#e0e0e0";
-            text.style.textShadow = "0 0 10px #bfbfbf, 0 0 16px #ffffff";
-        } else {
-            text.textContent = currentTeam.name;
-            text.style.color = currentTeam.color;
-            text.style.textShadow = `0 0 12px ${currentTeam.color}`;
-        }
-
-        index++;
-        spins++;
-
-        if (spins >= totalSpins) {
-            clearInterval(interval);
-
-            const finalTeam = availableTeams[(index - 1) % availableTeams.length];
-
-            if (finalTeam.color === "#000000") {
-                text.textContent = finalTeam.name;
-                text.style.color = "#e0e0e0";
-                text.style.textShadow =
-                    "0 0 12px #d9d9d9, 0 0 22px #ffffff, 0 0 30px #cfcfcf";
-            } else {
-                text.textContent = finalTeam.name;
-                text.style.color = finalTeam.color;
-                text.style.textShadow = `0 0 18px ${finalTeam.color}`;
-            }
-
-            runCount++;
-            assignedTeams.push({
-                run: runCount,
-                name: finalTeam.name,
-                color: finalTeam.color
-            });
-
-            updateAssignmentsUI();
-            applyTeamTheme(finalTeam);
-            launchConfetti(finalTeam.color);
-
-            if (runCount < 7) {
-                nextPlayerBtn.style.display = "inline-block";
-            } else {
-                nextPlayerBtn.style.display = "none";
-                setTimeout(showFinalScreen, 1500);
-            }
-        }
-    }, 120);
-}
-
-// ===============================
 // SIGUIENTE PERSONA
 // ===============================
 function startNextPlayer() {
@@ -441,6 +488,10 @@ function startNextPlayer() {
         showFinalScreen();
         return;
     }
+
+    pendingTeam = null;
+    awaitingVideoCompletion = false;
+    hideTeamVideoOverlay();
 
     currentIndex = 0;
     for (const k in answers) delete answers[k];
@@ -460,4 +511,14 @@ document.addEventListener("DOMContentLoaded", () => {
     initMusic();
     showIntro();                 // ⬅️ ahora partimos con la pantalla de bienvenida
     nextPlayerBtn.addEventListener("click", startNextPlayer);
+    if (skipVideoBtn) {
+        skipVideoBtn.addEventListener("click", () => {
+            onTeamVideoFinished();
+        });
+    }
+    if (teamVideo) {
+        teamVideo.addEventListener("ended", () => {
+            onTeamVideoFinished();
+        });
+    }
 });
