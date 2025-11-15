@@ -13,13 +13,11 @@
 
     <!-- VIDEO DE FONDO ANIMADO -->
     <video autoplay muted loop playsinline id="bgVideo">
-        <source src="static/videos/pinterest-video.mp4" type="video/mp4" />
+        <source src="static/videos/wallpaper/Playa.mp4" type="video/mp4" />
     </video>
 
     <!-- MÚSICA DE FONDO -->
-    <audio id="bgMusic" loop>
-        <source src="static/audio/ATEEZ - HALAZIA  Instrumental - WONNIE THE WORLD.mp3" type="audio/mpeg" />
-    </audio>
+    <audio id="bgMusic" preload="auto"></audio>
 
     <!-- IMPORTANTE: id="quizWrapper" para cambiar tema según equipo -->
     <div class="quiz-wrapper" id="quizWrapper">
@@ -30,7 +28,14 @@
                 <img src="static/images/icono.png" alt="Logo Wonlimpiadas" class="top-icon" />
                 <div class="title">Wonlimpiadas 2026 Encuentra tu equipo</div>
             </div>
-            <button id="musicToggle" class="music-btn">🎵 Música: OFF</button>
+            <div class="music-panel">
+                <div class="music-controls">
+                    <button id="musicPrevBtn" class="music-btn" type="button" aria-label="Canción anterior">⏮</button>
+                    <button id="musicPlayPauseBtn" class="music-btn" type="button" aria-label="Reproducir o pausar">▶</button>
+                    <button id="musicNextBtn" class="music-btn" type="button" aria-label="Siguiente canción">⏭</button>
+                </div>
+                <input type="range" id="musicVolume" class="music-volume" min="0" max="100" value="15" aria-label="Volumen" />
+            </div>
         </div>
 
         <!-- BARRA DE PROGRESO -->
@@ -58,6 +63,7 @@
 
     <div class="team-video-overlay" id="teamVideoOverlay">
         <video id="teamVideo" preload="auto"></video>
+        <div class="team-video-title" id="teamVideoTitle"></div>
         <button class="skip-video-btn" id="skipVideoBtn">Saltar presentación</button>
     </div>
 

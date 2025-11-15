@@ -61,6 +61,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .top-left {
@@ -84,19 +86,76 @@ body {
 
 /* BOTÓN MÚSICA */
 .music-btn {
-    background: rgba(255, 255, 255, 0.08);
+    background: transparent;
     color: #fff;
-    border-radius: 999px;
-    border: 1px solid #b780ff;
-    padding: 6px 14px;
-    font-size: 0.85rem;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    padding: 6px 16px;
+    font-size: 1.35rem;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
+    transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .music-btn:hover {
-    background: rgba(183, 128, 255, 0.4);
     transform: translateY(-1px);
+    color: #ffd7ff;
+}
+
+.music-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.music-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.music-volume {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+}
+
+.music-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.65);
+}
+
+.music-volume::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 768px) {
+    .music-panel {
+        width: 100%;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .music-volume {
+        width: 100%;
+        max-width: 260px;
+    }
+    .music-controls {
+        justify-content: flex-start;
+    }
 }
 
 /* BARRA DE PROGRESO 💜 */
@@ -395,6 +454,16 @@ body {
     border-radius: 18px;
     box-shadow: 0 0 26px rgba(255, 255, 255, 0.4);
     background: #000;
+}
+
+.team-video-title {
+    font-size: clamp(1.2rem, 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 18px rgba(255, 255, 255, 0.8);
 }
 
 .skip-video-btn {

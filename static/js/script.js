@@ -57,16 +57,16 @@ const teams = [
     { name: "Wons United", color: "#ff80ab" }               // rosado
 ];
 
-// Ruta de video por equipo (por ahora todos apuntan al placeholder hasta tener material final)
+// Videos específicos por equipo
 const fallbackTeamVideo = "static/videos/pinterest-video.mp4";
 const teamVideos = {
-    "Apóstoles de Nashito": fallbackTeamVideo,
-    "Los Loleros": fallbackTeamVideo,
-    "Callampa FC": fallbackTeamVideo,
-    "Deportes Chuchunco City": fallbackTeamVideo,
-    "Enanito FC": fallbackTeamVideo,
-    "Orgullo CDF": fallbackTeamVideo,
-    "Wons United": fallbackTeamVideo
+    "Apóstoles de Nashito": "static/videos/equipos/Apostoles_de_Nashito.mp4",
+    "Los Loleros": "static/videos/equipos/Loleros_fc.mp4",
+    "Callampa FC": "static/videos/equipos/Callampa_FC.mp4",
+    "Deportes Chuchunco City": "static/videos/equipos/Chuchunco_city.mp4",
+    "Enanito FC": "static/videos/equipos/Enano_FC.mp4",
+    "Orgullo CDF": "static/videos/equipos/Orgullo_CDF.mp4",
+    "Wons United": "static/videos/equipos/Wons_United.mp4"
 };
 
 // ===============================
@@ -90,7 +90,12 @@ const nextPlayerBtn = document.getElementById("nextPlayerBtn");
 const assignmentsList = document.getElementById("assignmentsList");
 const teamVideoOverlay = document.getElementById("teamVideoOverlay");
 const teamVideo = document.getElementById("teamVideo");
+const teamVideoTitle = document.getElementById("teamVideoTitle");
 const skipVideoBtn = document.getElementById("skipVideoBtn");
+const musicPlayPauseBtn = document.getElementById("musicPlayPauseBtn");
+const musicNextBtn = document.getElementById("musicNextBtn");
+const musicPrevBtn = document.getElementById("musicPrevBtn");
+const musicVolumeSlider = document.getElementById("musicVolume");
 let awaitingVideoCompletion = false;
 let pendingTeam = null;
 
@@ -103,25 +108,114 @@ const DEFAULT_PROGRESS_BG = "linear-gradient(90deg, #d18aff, #9a3dff, #5a00ff)";
 // MÚSICA
 // ===============================
 const bgMusic = document.getElementById("bgMusic");
-const musicToggle = document.getElementById("musicToggle");
+const DEFAULT_VOLUME = 0.15;
+const musicPlaylist = [
+    {
+        title: "ATEEZ - HALAZIA (Instrumental)",
+        src: "static/audio/ATEEZ - HALAZIA  Instrumental - WONNIE THE WORLD.mp3"
+    }
+];
+let currentTrackIndex = 0;
+
+function getCurrentTrack() {
+    if (!musicPlaylist.length) return null;
+    return musicPlaylist[currentTrackIndex];
+}
+
+function updateMusicButtonState() {
+    if (!musicPlayPauseBtn) return;
+    if (!bgMusic || bgMusic.paused) {
+        musicPlayPauseBtn.textContent = "▶";
+    } else {
+        musicPlayPauseBtn.textContent = "❚❚";
+    }
+}
+
+function loadCurrentTrack(autoplay = false) {
+    if (!bgMusic) return;
+    const track = getCurrentTrack();
+    if (!track) return;
+    if (bgMusic.getAttribute("src") !== track.src) {
+        bgMusic.setAttribute("src", track.src);
+    }
+    bgMusic.load();
+    if (autoplay) {
+        playCurrentTrack();
+    } else {
+        updateMusicButtonState();
+    }
+}
+
+function playCurrentTrack() {
+    if (!bgMusic) return;
+    bgMusic.play().then(() => {
+        updateMusicButtonState();
+    }).catch(() => {});
+}
+
+function pauseCurrentTrack() {
+    if (!bgMusic) return;
+    bgMusic.pause();
+    updateMusicButtonState();
+}
+
+function changeTrack(direction, forceAutoplay = false) {
+    if (!musicPlaylist.length) return;
+    currentTrackIndex =
+        (currentTrackIndex + direction + musicPlaylist.length) %
+        musicPlaylist.length;
+    const shouldAutoplay = forceAutoplay || (bgMusic && !bgMusic.paused);
+    loadCurrentTrack(shouldAutoplay);
+}
 
 function initMusic() {
-    bgMusic.volume = 0.15;
+    if (!bgMusic) return;
+    bgMusic.volume = DEFAULT_VOLUME;
+    loadCurrentTrack(false);
+    if (musicVolumeSlider) {
+        musicVolumeSlider.value = Math.round(bgMusic.volume * 100);
+    }
 
     const startMusicOnce = () => {
-        bgMusic.play().catch(() => {});
         document.removeEventListener("click", startMusicOnce);
+        if (bgMusic.paused) {
+            playCurrentTrack();
+        }
     };
     document.addEventListener("click", startMusicOnce);
 
-    musicToggle.addEventListener("click", () => {
-        if (bgMusic.paused) {
-            bgMusic.play().catch(() => {});
-            musicToggle.textContent = "🎵 Música: ON";
-        } else {
-            bgMusic.pause();
-            musicToggle.textContent = "🎵 Música: OFF";
-        }
+    if (musicPlayPauseBtn) {
+        musicPlayPauseBtn.addEventListener("click", () => {
+            if (bgMusic.paused) {
+                playCurrentTrack();
+            } else {
+                pauseCurrentTrack();
+            }
+        });
+    }
+
+    if (musicNextBtn) {
+        musicNextBtn.addEventListener("click", () => changeTrack(1));
+    }
+    if (musicPrevBtn) {
+        musicPrevBtn.addEventListener("click", () => changeTrack(-1));
+    }
+
+    if (musicVolumeSlider) {
+        musicVolumeSlider.addEventListener("input", (event) => {
+            if (!bgMusic) return;
+            const value = Number(event.target.value);
+            const normalized = Math.min(100, Math.max(0, value)) / 100;
+            bgMusic.volume = normalized;
+        });
+    }
+
+    bgMusic.addEventListener("ended", () => changeTrack(1, true));
+    bgMusic.addEventListener("play", () => {
+        updateMusicButtonState();
+    });
+    bgMusic.addEventListener("pause", () => {
+        updateMusicButtonState();
     });
 }
 
@@ -251,6 +345,16 @@ function showTeamVideoTransition(team) {
         return;
     }
 
+    if (teamVideoTitle) {
+        teamVideoTitle.textContent = team.name;
+        const titleColor = team.color === "#000000" ? "#f5f5f5" : team.color;
+        teamVideoTitle.style.color = titleColor;
+        teamVideoTitle.style.textShadow =
+            team.color === "#000000"
+                ? "0 0 12px rgba(255,255,255,0.85)"
+                : `0 0 12px ${team.color}`;
+    }
+
     if (teamVideo.getAttribute("src") !== videoSrc) {
         teamVideo.setAttribute("src", videoSrc);
     }
@@ -275,6 +379,9 @@ function hideTeamVideoOverlay() {
     }
     if (teamVideoOverlay) {
         teamVideoOverlay.classList.remove("visible");
+    }
+    if (teamVideoTitle) {
+        teamVideoTitle.textContent = "";
     }
 }
 
