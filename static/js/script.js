@@ -41,7 +41,39 @@ const questions = [
             "De lado derecho",
             "Con los ojos cerrados 😆"
         ]
-    }
+        
+    },
+    {
+        text: "8. ¿Si le pudieras pedir un deseo a nashito?, ¿Cuál sería?",
+        name: "p8",
+        options: [
+            "Que me suba el pase del Fortnite",
+            "Que me regale una PS5",
+            "Que pida un saludo de Don Cambiaso",
+            "Que me regale un Wonsito"
+        ]
+        
+    },
+    {
+    text: "9. ¿Qué animal te representa?",
+    name: "p9",
+    options: ["Perro", "Gato", "Águila", "Serpiente"]
+    },
+    {
+    text: "10. ¿Qué superpoder te gustaría tener?",
+    name: "p10",
+    options: ["Volar", "Superfuerza", "Telepatía", "Invisibilidad"]
+    },
+    {
+    text: "11. ¿Si fueras un Pokémon, qué tipo serías?",
+    name: "p11",
+    options: ["Agua", "Fuego", "Siniestro", "Chileno"]
+    },
+    {
+    text: "12. ¿Qué anime verías mil veces?",
+    name: "p12",
+    options: ["Naruto", "One Piece", "Dragon Ball", "Boku no Pico (valentía)"]
+    },
 ];
 
 // ===============================

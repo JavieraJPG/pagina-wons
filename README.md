@@ -24,7 +24,7 @@ Si quieres ejecutar la página mediante un servidor local puedes usar cualquiera
    cd pagina-wons
    ```
 2. Ejecuta la página:
-   - **Abrir el archivo directamente**: haz doble clic en `index.html` o ábrelo desde tu navegador preferido.
+   - **Abrir el archivo directamente**: haz doble clic en `index.html` o ábrelo desde tu navegador preferido. Esta pantalla muestra la vista de password y, tras ingresar la contraseña correcta, te llevará al menú y desde ahí al cuestionario (`quiz.html`).
    - **Usando Node.js + serve**:  
      ```bash
      serve .
@@ -36,4 +36,4 @@ Si quieres ejecutar la página mediante un servidor local puedes usar cualquiera
      ```
      Luego navega a `http://localhost:8000`.
 
-Con cualquiera de las alternativas el navegador cargará `index.html` y los recursos que se encuentran en el directorio `static/`.
+Con cualquiera de las alternativas el navegador cargará `index.html` (pantalla de contraseña) y los recursos que se encuentran en el directorio `static/`.

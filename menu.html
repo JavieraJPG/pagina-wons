@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Control</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: #6c9ea9;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pantalla {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #7fb2bd 0%, #5d8b97 70%);
+      overflow: hidden;
+    }
+
+    /* Panel blanco central ligeramente curvo */
+    .panel {
+      position: absolute;
+      top: 15%;
+      bottom: 20%;
+      left: 15%;
+      right: 15%;
+      background: #e4ecef;
+      border-radius: 8px;
+      transform: skewY(-2deg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-contenido {
+      flex: 1;
+      transform: skewY(2deg); /* corrige el texto */
+      display: flex;
+      flex-direction: column;
+      padding: 40px 60px;
+    }
+
+    .panel-titulo {
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    .menu-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 20px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .item-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .item:hover {
+      background: rgba(0, 0, 0, 0.08);
+      transform: translateX(4px);
+    }
+
+    .icono {
+      width: 26px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Plataforma y personaje */
+    .plataforma {
+      position: absolute;
+      bottom: 0;
+      right: 12%;
+      width: 260px;
+      height: 90px;
+      background: #111;
+      clip-path: polygon(0 65%, 80% 40%, 100% 50%, 100% 100%, 0 100%);
+    }
+
+    .personaje {
+      position: absolute;
+      bottom: 55px;
+      right: 21%;
+      width: 40px;
+      height: 40px;
+      background: #111;
+      border-radius: 50% 50% 40% 40%;
+    }
+  </style>
+</head>
+<body>
+  <div class="pantalla">
+    <div class="panel">
+      <div class="panel-contenido">
+        <div class="panel-titulo">ISLAND OPERATIONS</div>
+
+        <div class="menu-lista">
+          <a class="item item-link" id="irCuestionario" href="quiz.html">
+            <div class="icono">▶</div>
+            <div>Ir al cuestionario</div>
+          </a>
+
+          <div class="item">
+            <div class="icono">$</div>
+            <div>Finances</div>
+          </div>
+
+          <div class="item">
+            <div class="icono">◎</div>
+            <div>Omnidroid Metatraining</div>
+          </div>
+
+          <div class="item">
+            <div class="icono">▮</div>
+            <div>Supers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="plataforma"></div>
+    <div class="personaje"></div>
+  </div>
+
+  <script>
+    (function () {
+      const ACCESS_FLAG = "menuAccess";
+      if (sessionStorage.getItem(ACCESS_FLAG) !== "true") {
+        window.location.replace("index.html");
+        return;
+      }
+    })();
+  </script>
+</body>
+</html>

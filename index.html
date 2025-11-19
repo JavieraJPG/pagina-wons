@@ -1,73 +1,179 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Encuentra a tu equipo</title>
-    <link rel="icon" type="image/png" href="static/images/icono.png" />
-    <link rel="stylesheet" href="static/CSS/style.css" />
+  <meta charset="UTF-8">
+  <title>Acceso - Password</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: system-ui, sans-serif;
+      background: #6c9ea9;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pantalla {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #7fb2bd 0%, #5d8b97 70%);
+      overflow: hidden;
+    }
+
+    /* Banda blanca curva */
+    .banda {
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      top: 45%;
+      height: 120px;
+      background: #dde6ea;
+      transform: skewY(-4deg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .banda span {
+      font-size: 56px;
+      letter-spacing: 0.6em;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Caja de password */
+    .password-box {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: #f0f5f6;
+    }
+
+    .password-box label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 18px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .password-box input {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: none;
+      width: 260px;
+      font-size: 16px;
+      text-align: center;
+      background: #e5edf0;
+      outline: none;
+    }
+
+    .password-box button {
+      margin-top: 14px;
+      padding: 10px 30px;
+      border-radius: 999px;
+      border: none;
+      background: #111;
+      color: #e5edf0;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+    }
+
+    .mensaje-error {
+      margin-top: 10px;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      color: #ffb3ba;
+      min-height: 18px;
+    }
+
+    .password-box button:hover {
+      opacity: 0.85;
+    }
+
+    /* Silueta del personaje (simple) */
+    .plataforma {
+      position: absolute;
+      bottom: 0;
+      right: 12%;
+      width: 260px;
+      height: 90px;
+      background: #111;
+      clip-path: polygon(0 65%, 80% 40%, 100% 50%, 100% 100%, 0 100%);
+    }
+
+    .personaje {
+      position: absolute;
+      bottom: 55px;
+      right: 21%;
+      width: 40px;
+      height: 40px;
+      background: #111;
+      border-radius: 50% 50% 40% 40%;
+    }
+  </style>
 </head>
-
 <body>
-
-    <!-- VIDEO DE FONDO ANIMADO -->
-    <video autoplay muted loop playsinline id="bgVideo">
-        <source src="static/videos/wallpaper/Playa.mp4" type="video/mp4" />
-    </video>
-
-    <!-- MÚSICA DE FONDO -->
-    <audio id="bgMusic" preload="auto"></audio>
-
-    <!-- IMPORTANTE: id="quizWrapper" para cambiar tema según equipo -->
-    <div class="quiz-wrapper" id="quizWrapper">
-
-        <!-- BARRA SUPERIOR -->
-        <div class="top-bar">
-            <div class="top-left">
-                <img src="static/images/icono.png" alt="Logo Wonlimpiadas" class="top-icon" />
-                <div class="title">Wonlimpiadas 2026 Encuentra tu equipo</div>
-            </div>
-            <div class="music-panel">
-                <div class="music-controls">
-                    <button id="musicPrevBtn" class="music-btn" type="button" aria-label="Canción anterior">⏮</button>
-                    <button id="musicPlayPauseBtn" class="music-btn" type="button" aria-label="Reproducir o pausar">▶</button>
-                    <button id="musicNextBtn" class="music-btn" type="button" aria-label="Siguiente canción">⏭</button>
-                </div>
-                <input type="range" id="musicVolume" class="music-volume" min="0" max="100" value="15" aria-label="Volumen" />
-            </div>
-        </div>
-
-        <!-- BARRA DE PROGRESO -->
-        <div class="progress-bar">
-            <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-
-        <!-- PREGUNTA / MENSAJE -->
-        <div class="question-bubble fade-in" id="questionText"></div>
-
-        <!-- RESPUESTAS o RULETA -->
-        <div class="answers fade-in" id="answersContainer"></div>
-
-        <!-- TEXTO DE PROGRESO -->
-        <div class="progress" id="progressText"></div>
-
-        <!-- PANEL PARA 7 PERSONAS -->
-        <div class="players-panel">
-            <button id="nextPlayerBtn" class="next-btn" style="display:none;">
-                Siguiente equipo
-            </button>
-            <div id="assignmentsList" class="assignments-list"></div>
-        </div>
+  <div class="pantalla">
+    <div class="banda">
+      <span>PASSWORD</span>
     </div>
 
-    <div class="team-video-overlay" id="teamVideoOverlay">
-        <video id="teamVideo" preload="auto"></video>
-        <div class="team-video-title" id="teamVideoTitle"></div>
-        <button class="skip-video-btn" id="skipVideoBtn">Saltar presentación</button>
+    <div class="password-box">
+      <label for="pass">Ingrese la contraseña</label>
+      <input id="pass" type="password" placeholder="********" autocomplete="current-password">
+      <br>
+      <button id="entrarBtn" type="button">Entrar</button>
+      <div id="mensajeError" class="mensaje-error"></div>
     </div>
 
-    <script src="static/js/script.js"></script>
+    <div class="plataforma"></div>
+    <div class="personaje"></div>
+  </div>
+  <script>
+    (function () {
+      const ACCESS_FLAG = "menuAccess";
+      const PASSWORD = "wonsito";
+      const input = document.getElementById("pass");
+      const button = document.getElementById("entrarBtn");
+      const errorBox = document.getElementById("mensajeError");
+
+      function mostrarError(msg) {
+        errorBox.textContent = msg;
+      }
+
+      function intentarAcceso() {
+        const value = (input.value || "").trim();
+        if (!value) {
+          mostrarError("La contraseña es obligatoria.");
+          return;
+        }
+        if (value === PASSWORD) {
+          sessionStorage.setItem(ACCESS_FLAG, "true");
+          window.location.href = "menu.html";
+        } else {
+          mostrarError("Contraseña incorrecta. Intenta nuevamente.");
+        }
+      }
+
+      button.addEventListener("click", intentarAcceso);
+      input.addEventListener("input", () => mostrarError(""));
+      input.addEventListener("keyup", (event) => {
+        if (event.key === "Enter") {
+          intentarAcceso();
+        }
+      });
+    })();
+  </script>
 </body>
-
 </html>
