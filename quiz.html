@@ -19,7 +19,7 @@
     <!-- MÚSICA DE FONDO -->
     <audio id="bgMusic" preload="auto"></audio>
 
-    <!-- IMPORTANTE: id="quizWrapper" para cambiar tema según equipo -->
+    <!-- CONTENEDOR PRINCIPAL -->
     <div class="quiz-wrapper" id="quizWrapper">
 
         <!-- BARRA SUPERIOR -->
@@ -28,13 +28,15 @@
                 <img src="static/images/icono.png" alt="Logo Wonlimpiadas" class="top-icon" />
                 <div class="title">Wonlimpiadas 2026 Encuentra tu equipo</div>
             </div>
+
             <div class="music-panel">
                 <div class="music-controls">
                     <button id="musicPrevBtn" class="music-btn" type="button" aria-label="Canción anterior">⏮</button>
                     <button id="musicPlayPauseBtn" class="music-btn" type="button" aria-label="Reproducir o pausar">▶</button>
                     <button id="musicNextBtn" class="music-btn" type="button" aria-label="Siguiente canción">⏭</button>
                 </div>
-                <input type="range" id="musicVolume" class="music-volume" min="0" max="100" value="15" aria-label="Volumen" />
+                <input type="range" id="musicVolume" class="music-volume" min="0" max="100" value="15"
+                    aria-label="Volumen" />
             </div>
         </div>
 
@@ -46,13 +48,13 @@
         <!-- PREGUNTA / MENSAJE -->
         <div class="question-bubble fade-in" id="questionText"></div>
 
-        <!-- RESPUESTAS o RULETA -->
+        <!-- RESPUESTAS / INTRO -->
         <div class="answers fade-in" id="answersContainer"></div>
 
         <!-- TEXTO DE PROGRESO -->
         <div class="progress" id="progressText"></div>
 
-        <!-- PANEL PARA 7 PERSONAS -->
+        <!-- PANEL PARA 7 EQUIPOS -->
         <div class="players-panel">
             <button id="nextPlayerBtn" class="next-btn" style="display:none;">
                 Siguiente equipo
@@ -61,6 +63,7 @@
         </div>
     </div>
 
+    <!-- OVERLAY DE VIDEO DE EQUIPO -->
     <div class="team-video-overlay" id="teamVideoOverlay">
         <video id="teamVideo" preload="auto"></video>
         <div class="team-video-title" id="teamVideoTitle"></div>

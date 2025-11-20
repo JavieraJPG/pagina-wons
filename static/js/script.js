@@ -41,7 +41,6 @@ const questions = [
             "De lado derecho",
             "Con los ojos cerrados 😆"
         ]
-        
     },
     {
         text: "8. ¿Si le pudieras pedir un deseo a nashito?, ¿Cuál sería?",
@@ -52,44 +51,42 @@ const questions = [
             "Que pida un saludo de Don Cambiaso",
             "Que me regale un Wonsito"
         ]
-        
     },
     {
-    text: "9. ¿Qué animal te representa?",
-    name: "p9",
-    options: ["Perro", "Gato", "Águila", "Serpiente"]
+        text: "9. ¿Qué animal te representa?",
+        name: "p9",
+        options: ["Perro", "Gato", "Águila", "Serpiente"]
     },
     {
-    text: "10. ¿Qué superpoder te gustaría tener?",
-    name: "p10",
-    options: ["Volar", "Superfuerza", "Telepatía", "Invisibilidad"]
+        text: "10. ¿Qué superpoder te gustaría tener?",
+        name: "p10",
+        options: ["Volar", "Superfuerza", "Telepatía", "Invisibilidad"]
     },
     {
-    text: "11. ¿Si fueras un Pokémon, qué tipo serías?",
-    name: "p11",
-    options: ["Agua", "Fuego", "Siniestro", "Chileno"]
+        text: "11. ¿Si fueras un Pokémon, qué tipo serías?",
+        name: "p11",
+        options: ["Agua", "Fuego", "Siniestro", "Chileno"]
     },
     {
-    text: "12. ¿Qué anime verías mil veces?",
-    name: "p12",
-    options: ["Naruto", "One Piece", "Dragon Ball", "Boku no Pico (valentía)"]
-    },
+        text: "12. ¿Qué anime verías mil veces?",
+        name: "p12",
+        options: ["Naruto", "One Piece", "Dragon Ball", "Boku no Pico (valentía)"]
+    }
 ];
 
 // ===============================
-// EQUIPOS PARA LA RULETA
+// EQUIPOS
 // ===============================
 const teams = [
-    { name: "Apóstoles de Nashito", color: "#ff1744" },     // rojo
-    { name: "Los Loleros", color: "#2979ff" },              // azul
-    { name: "Callampa FC", color: "#ffffff" },              // blanco
-    { name: "Deportes Chuchunco City", color: "#00e676" },  // verde
-    { name: "Enanito FC", color: "#000000" },               // negro
-    { name: "Orgullo CDF", color: "#ffeb3b" },              // amarillo
-    { name: "Wons United", color: "#ff80ab" }               // rosado
+    { name: "Apóstoles de Nashito", color: "#ff1744" },
+    { name: "Los Loleros", color: "#2979ff" },
+    { name: "Callampa FC", color: "#ffffff" },
+    { name: "Deportes Chuchunco City", color: "#00e676" },
+    { name: "Enanito FC", color: "#000000" },
+    { name: "Orgullo CDF", color: "#ffeb3b" },
+    { name: "Wons United", color: "#ff80ab" }
 ];
 
-// Videos específicos por equipo
 const fallbackTeamVideo = "static/videos/pinterest-video.mp4";
 const teamVideos = {
     "Apóstoles de Nashito": "static/videos/equipos/Apostoles_de_Nashito.mp4",
@@ -102,16 +99,13 @@ const teamVideos = {
 };
 
 // ===============================
-// VARIABLES DE ESTADO
+// ESTADO
 // ===============================
 let currentIndex = 0;
 const answers = {};
-let runCount = 0;                 // cuántas personas van (máx 7)
-const assignedTeams = [];         // equipos ya usados
+let runCount = 0;
+const assignedTeams = [];
 
-// ===============================
-// ELEMENTOS DEL DOM
-// ===============================
 const questionText = document.getElementById("questionText");
 const answersContainer = document.getElementById("answersContainer");
 const progressText = document.getElementById("progressText");
@@ -124,14 +118,16 @@ const teamVideoOverlay = document.getElementById("teamVideoOverlay");
 const teamVideo = document.getElementById("teamVideo");
 const teamVideoTitle = document.getElementById("teamVideoTitle");
 const skipVideoBtn = document.getElementById("skipVideoBtn");
+
 const musicPlayPauseBtn = document.getElementById("musicPlayPauseBtn");
 const musicNextBtn = document.getElementById("musicNextBtn");
 const musicPrevBtn = document.getElementById("musicPrevBtn");
 const musicVolumeSlider = document.getElementById("musicVolume");
+
 let awaitingVideoCompletion = false;
 let pendingTeam = null;
 
-// Estilos por defecto del cuadro
+// estilos por defecto
 const DEFAULT_BG = "rgba(20, 0, 40, 0.55)";
 const DEFAULT_SHADOW = "0 18px 40px rgba(0, 0, 0, 0.7)";
 const DEFAULT_PROGRESS_BG = "linear-gradient(90deg, #d18aff, #9a3dff, #5a00ff)";
@@ -143,8 +139,8 @@ const bgMusic = document.getElementById("bgMusic");
 const DEFAULT_VOLUME = 0.15;
 const musicPlaylist = [
     {
-        title: "ATEEZ - HALAZIA (Instrumental)",
-        src: "static/audio/ATEEZ - HALAZIA  Instrumental - WONNIE THE WORLD.mp3"
+        title: "ATEEZ-GUERRILLA",
+        src: "static/audio/ATEEZ-GUERRILLA.mp3"
     }
 ];
 let currentTrackIndex = 0;
@@ -180,9 +176,7 @@ function loadCurrentTrack(autoplay = false) {
 
 function playCurrentTrack() {
     if (!bgMusic) return;
-    bgMusic.play().then(() => {
-        updateMusicButtonState();
-    }).catch(() => {});
+    bgMusic.play().then(updateMusicButtonState).catch(() => {});
 }
 
 function pauseCurrentTrack() {
@@ -204,8 +198,13 @@ function initMusic() {
     if (!bgMusic) return;
     bgMusic.volume = DEFAULT_VOLUME;
     loadCurrentTrack(false);
+
     if (musicVolumeSlider) {
         musicVolumeSlider.value = Math.round(bgMusic.volume * 100);
+        musicVolumeSlider.addEventListener("input", (e) => {
+            const value = Number(e.target.value);
+            bgMusic.volume = Math.min(1, Math.max(0, value / 100));
+        });
     }
 
     const startMusicOnce = () => {
@@ -218,41 +217,20 @@ function initMusic() {
 
     if (musicPlayPauseBtn) {
         musicPlayPauseBtn.addEventListener("click", () => {
-            if (bgMusic.paused) {
-                playCurrentTrack();
-            } else {
-                pauseCurrentTrack();
-            }
+            if (bgMusic.paused) playCurrentTrack();
+            else pauseCurrentTrack();
         });
     }
-
-    if (musicNextBtn) {
-        musicNextBtn.addEventListener("click", () => changeTrack(1));
-    }
-    if (musicPrevBtn) {
-        musicPrevBtn.addEventListener("click", () => changeTrack(-1));
-    }
-
-    if (musicVolumeSlider) {
-        musicVolumeSlider.addEventListener("input", (event) => {
-            if (!bgMusic) return;
-            const value = Number(event.target.value);
-            const normalized = Math.min(100, Math.max(0, value)) / 100;
-            bgMusic.volume = normalized;
-        });
-    }
+    if (musicNextBtn) musicNextBtn.addEventListener("click", () => changeTrack(1));
+    if (musicPrevBtn) musicPrevBtn.addEventListener("click", () => changeTrack(-1));
 
     bgMusic.addEventListener("ended", () => changeTrack(1, true));
-    bgMusic.addEventListener("play", () => {
-        updateMusicButtonState();
-    });
-    bgMusic.addEventListener("pause", () => {
-        updateMusicButtonState();
-    });
+    bgMusic.addEventListener("play", updateMusicButtonState);
+    bgMusic.addEventListener("pause", updateMusicButtonState);
 }
 
 // ===============================
-// ANIMACIÓN DE FADE
+// ANIMACIONES
 // ===============================
 function applyFadeAnimation() {
     questionText.classList.remove("fade-in");
@@ -262,9 +240,6 @@ function applyFadeAnimation() {
     answersContainer.classList.add("fade-in");
 }
 
-// ===============================
-// BARRA DE PROGRESO
-// ===============================
 function updateProgressBar() {
     const total = questions.length;
     const percent = (currentIndex / total) * 100;
@@ -272,7 +247,7 @@ function updateProgressBar() {
 }
 
 // ===============================
-// TEMA SEGÚN EQUIPO
+// TEMA POR EQUIPO
 // ===============================
 function applyTeamTheme(team) {
     quizWrapper.style.background = "rgba(5, 5, 10, 0.9)";
@@ -280,7 +255,6 @@ function applyTeamTheme(team) {
     progressFill.style.background = `linear-gradient(90deg, ${team.color}, #ffffff)`;
 }
 
-// reset del cuadro para siguiente persona
 function resetTheme() {
     quizWrapper.style.background = DEFAULT_BG;
     quizWrapper.style.boxShadow = DEFAULT_SHADOW;
@@ -288,7 +262,7 @@ function resetTheme() {
 }
 
 // ===============================
-// CONFETI FINAL & MINI CONFETI
+// CONFETI
 // ===============================
 function getConfettiColors(teamColor) {
     if (teamColor === "#000000") {
@@ -343,7 +317,7 @@ function launchConfetti(teamColor) {
 }
 
 // ===============================
-// LISTA INFERIOR (ASIGNACIONES)
+// LISTA DE ASIGNACIONES
 // ===============================
 function updateAssignmentsUI() {
     if (assignedTeams.length === 0) {
@@ -362,7 +336,7 @@ function updateAssignmentsUI() {
 }
 
 // ===============================
-// TRANSICIÓN CON VIDEO DE EQUIPO
+// VIDEO DE EQUIPO
 // ===============================
 function showTeamVideoTransition(team) {
     if (!team) {
@@ -425,7 +399,7 @@ function onTeamVideoFinished() {
 }
 
 // ===============================
-// ASIGNACIÓN Y FINALIZACIÓN
+// ASIGNAR EQUIPO
 // ===============================
 function selectTeamForCurrentRun() {
     const availableTeams = teams.filter(
@@ -443,7 +417,7 @@ function startTeamVideoSequence() {
     progressText.textContent = "Reproduciendo la presentación del equipo...";
     questionText.textContent = "¡Descubre a tu equipo en el video!";
     answersContainer.innerHTML = "";
-    answersContainer.classList.remove("roulette-mode");
+    answersContainer.classList.remove("roulette-mode", "intro-mode");
     applyFadeAnimation();
 
     if (!pendingTeam) {
@@ -493,14 +467,14 @@ function finalizeTeamAssignment() {
 }
 
 // ===============================
-// PANTALLA FINAL WONSLIMPIADAS
+// PANTALLA FINAL
 // ===============================
 function showFinalScreen() {
     questionText.textContent = "¡Prepárense para las Wonslimpiadas 2!";
     progressText.textContent = "Equipos, nos vemos pronto 🔥";
     progressFill.style.width = "100%";
 
-    answersContainer.classList.remove("roulette-mode");
+    answersContainer.classList.remove("roulette-mode", "intro-mode");
     answersContainer.innerHTML = "";
 
     const msg = document.createElement("div");
@@ -546,11 +520,11 @@ function showFinalScreen() {
 // PANTALLA DE BIENVENIDA
 // ===============================
 function showIntro() {
-    // texto de bienvenida (puedes cambiarlo aquí)
     questionText.textContent =
         "Bienvenidos a la elección de los nombres de sus equipos.";
 
     answersContainer.classList.remove("roulette-mode");
+    answersContainer.classList.add("intro-mode");
     answersContainer.innerHTML = "";
 
     const introText = document.createElement("div");
@@ -567,7 +541,7 @@ function showIntro() {
     startBtn.textContent = "Iniciar encuesta";
 
     startBtn.addEventListener("click", () => {
-        // arrancar la primera persona
+        answersContainer.classList.remove("intro-mode");
         currentIndex = 0;
         progressFill.style.width = "0%";
         progressText.textContent = "Pregunta 1 de " + questions.length;
@@ -581,7 +555,7 @@ function showIntro() {
 }
 
 // ===============================
-// RENDERIZAR PREGUNTA
+// PINTAR PREGUNTA
 // ===============================
 function renderQuestion() {
     if (runCount >= 7) {
@@ -594,7 +568,7 @@ function renderQuestion() {
         return;
     }
 
-    answersContainer.classList.remove("roulette-mode");
+    answersContainer.classList.remove("intro-mode", "roulette-mode");
 
     const q = questions[currentIndex];
     questionText.textContent = q.text;
@@ -648,8 +622,9 @@ function startNextPlayer() {
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
     initMusic();
-    showIntro();                 // ⬅️ ahora partimos con la pantalla de bienvenida
+    showIntro();
     nextPlayerBtn.addEventListener("click", startNextPlayer);
+
     if (skipVideoBtn) {
         skipVideoBtn.addEventListener("click", () => {
             onTeamVideoFinished();
@@ -658,6 +633,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (teamVideo) {
         teamVideo.addEventListener("ended", () => {
             onTeamVideoFinished();
+        });
+    }
+
+    // ✨ activar animación lenta del panel
+    if (quizWrapper) {
+        requestAnimationFrame(() => {
+            quizWrapper.classList.add("visible");
         });
     }
 });

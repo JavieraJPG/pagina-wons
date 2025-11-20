@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: system-ui, sans-serif;
+    background: #6c9ea9;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pantalla {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #7fb2bd 0%, #5d8b97 70%);
+    overflow: hidden;
+}
+
+/* Banda blanca curva */
+.banda {
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    top: 45%;
+    height: 120px;
+    background: #dde6ea;
+    transform: skewY(-4deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banda span {
+    font-size: 56px;
+    letter-spacing: 0.6em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Caja de password */
+.password-box {
+    position: absolute;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #f0f5f6;
+}
+
+.password-box label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 18px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.password-box input {
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: none;
+    width: 260px;
+    font-size: 16px;
+    text-align: center;
+    background: #e5edf0;
+    outline: none;
+}
+
+.password-box button {
+    margin-top: 14px;
+    padding: 10px 30px;
+    border-radius: 999px;
+    border: none;
+    background: #111;
+    color: #e5edf0;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+}
+
+.password-box button:hover {
+    opacity: 0.85;
+}
+
+.mensaje-error {
+    margin-top: 10px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    color: #ffb3ba;
+    min-height: 18px;
+}
+
+/* Silueta del personaje (simple) */
+.plataforma {
+    position: absolute;
+    bottom: 0;
+    right: 12%;
+    width: 260px;
+    height: 90px;
+    background: #111;
+    clip-path: polygon(0 65%, 80% 40%, 100% 50%, 100% 100%, 0 100%);
+}
+
+.personaje {
+    position: absolute;
+    bottom: 55px;
+    right: 21%;
+    width: 40px;
+    height: 40px;
+    background: #111;
+    border-radius: 50% 50% 40% 40%;
+}
+
+.estatica {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background-image: repeating-linear-gradient(0deg,
+            #ffffff 0px,
+            #ffffff 1px,
+            #000000 2px,
+            #000000 3px);
+    background-size: 100% 3px;
+    mix-blend-mode: screen;
+    animation: ruido 0.2s steps(3, end) infinite;
+    transition: opacity 0.08s;
+}
+
+.estatica.activa {
+    opacity: 1;
+}
+
+@keyframes ruido {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    25% {
+        transform: translate3d(-3px, 2px, 0);
+    }
+
+    50% {
+        transform: translate3d(2px, -2px, 0);
+    }
+
+    75% {
+        transform: translate3d(-2px, -1px, 0);
+    }
+
+    100% {
+        transform: translate3d(1px, 2px, 0);
+    }
+}
