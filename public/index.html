@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wonslimpiadas 2027</title>
-<meta name="description" content="Wonslimpiadas 2027: siete equipos, seis pruebas y la tabla de posiciones en vivo.">
+<meta name="description" content="Wonslimpiadas 2027: la competencia de videojuegos de los Wons. Historia de las ediciones, ganadores y tabla en vivo.">
 <meta name="theme-color" content="#ff7a1f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<a class="saltar" href="#pruebas">Saltar a las pruebas</a>
+<a class="saltar" href="#historia">Saltar a la historia</a>
 
 <header class="pin">
   <div class="escena">
@@ -20,52 +20,36 @@
     <div class="velo" aria-hidden="true"></div>
     <article class="ficha" aria-labelledby="titulo">
       <h1 id="titulo" class="titulo"><span translate="no">Wonslimpiadas</span> <span id="anio">2027</span></h1>
-      <ul id="fixture" class="fixture" aria-label="Equipos inscritos" translate="no">
-        <li>Apóstoles de Nashito</li><li>Los Loleros</li><li>Callampa FC</li><li>Deportes Chuchunco City</li><li>Enanito FC</li><li>Orgullo CDF</li><li>Wons United</li>
-      </ul>
+      <ol id="fixture" class="fixture" aria-label="Ediciones">
+        <li><b>2024</b> La guerra en Minecraft</li><li><b>2025</b> Mario Party 8</li><li><b>2026</b> Mario Strikers</li><li><b>2027</b> Por anunciar</li>
+      </ol>
       <div class="datos">
+        <p id="juego">Juego por anunciar</p>
         <p id="fecha">Fecha por confirmar</p>
         <p id="lugar">Lugar por confirmar</p>
-        <p><span id="n-equipos">7</span> equipos, <span id="n-pruebas">6</span> pruebas</p>
         <p id="cuenta" class="cuenta" hidden></p>
       </div>
-      <p class="frase">Siete equipos, una sola copa. <span id="lema">Wons 4 ever</span>.</p>
+      <p class="frase">La tercera edición se viene. <span id="lema">Wons 4 ever</span>.</p>
       <div class="pie">
         <p class="credito">Organizan <span id="orgs">Wonsrdinadores, Nazzqi Nashito y Mahomi Eliuom</span></p>
-        <a class="boton" href="#tabla">Ver la tabla</a>
-        <a class="enlace" href="#equipos">Los equipos</a>
+        <a class="boton" href="#historia">Ver la historia</a>
+        <a class="enlace" href="#tabla">La tabla</a>
       </div>
     </article>
   </div>
 </header>
 
 <main>
-  <section id="pruebas" class="pruebas" aria-labelledby="t-pruebas">
-    <div class="columna">
-      <h2 id="t-pruebas" class="gigante">Pruebas</h2>
-      <div id="lista-pruebas" class="barras">
-        <p class="nota">Cargando las pruebas…</p>
-      </div>
-    </div>
-    <figure class="lamina">
-      <img src="img/revista-estadio-1950.jpg" width="1347" height="945" loading="lazy" decoding="async" alt="Portada de la revista Estadio de 1950: tres jugadores de la selección chilena agachados sobre el pasto, con camiseta roja.">
-      <figcaption>Revista Estadio, julio de 1950. Así se ve un equipo que se toma en serio una tarde de domingo.</figcaption>
-    </figure>
-  </section>
-
-  <section id="equipos" class="equipos" aria-labelledby="t-equipos">
-    <img class="fondo" src="img/livingstone-1950.jpg" width="1001" height="1369" loading="lazy" decoding="async" alt="Fotografía de prensa de 1950: un arquero arrodillado sobre el pasto tras una jugada, con la tribuna llena al fondo.">
-    <div class="texto">
-      <h2 id="t-equipos">Los siete equipos</h2>
-      <p>Cada equipo tiene su planilla. Se llena prueba a prueba durante el día, a la vista de todos.</p>
-      <p>Integrantes y colores se confirman antes del pitazo inicial.</p>
-    </div>
-    <ul id="planillas" class="planillas" aria-label="Planillas de los equipos" translate="no"></ul>
+  <section id="historia" class="historia" aria-labelledby="t-historia">
+    <h2 id="t-historia" class="gigante">Historia</h2>
+    <ol id="ediciones" class="ediciones">
+      <li><p class="nota">Cargando las ediciones…</p></li>
+    </ol>
   </section>
 
   <section id="tabla" class="tabla" aria-labelledby="t-tabla">
     <div class="encabezado">
-      <h2 id="t-tabla"><span>Así va</span> la tabla</h2>
+      <h2 id="t-tabla"><span>Así va</span> la tabla 2027</h2>
       <p class="estado"><span id="vivo" class="vivo">En vivo</span> <span id="actualizado" role="status">Cargando la tabla…</span></p>
       <figure class="copa">
         <img src="img/copa-tribuna.webp" width="1024" height="733" loading="lazy" decoding="async" alt="Fotografía de archivo en blanco y negro: una copa sobre una mesa cubierta con una bandera, frente a una tribuna llena.">
@@ -84,18 +68,17 @@
   <div class="tarjeta">
     <div class="mensaje">
       <p class="despedida">Wons 4 ever</p>
-      <p>Nos vemos en 2027. Si tu equipo cambia de nombre o de integrantes, avísale a la organización antes del día de las pruebas.</p>
+      <p>Nos vemos en 2027. El juego, los equipos y la fecha se anuncian aquí apenas la organización los decida.</p>
     </div>
     <div class="direccion">
       <img class="sello" src="img/revista-estadio-1950.jpg" width="1347" height="945" loading="lazy" decoding="async" alt="">
       <ul>
-        <li><a href="#pruebas">Las pruebas</a></li>
-        <li><a href="#equipos">Los equipos</a></li>
+        <li><a href="#historia">La historia</a></li>
         <li><a href="#tabla">La tabla</a></li>
         <li><a href="/admin">Panel de puntos</a></li>
       </ul>
     </div>
-    <p class="imprenta">Wonslimpiadas 2027. Fotos de archivo, ninguna es de los equipos: <a href="https://commons.wikimedia.org/wiki/File:Delegaci%C3%B3n_de_Chile_en_el_Mundial_1950,_Estadio,_1954-01-09_(556).jpg">plantel chileno, 1950</a>, <a href="https://commons.wikimedia.org/wiki/File:%C3%81lvarez,_Busquets_y_Carvallo,_Estadio,_1950-07-29_(376).jpg">portada de la revista Estadio, 1950</a> y <a href="https://commons.wikimedia.org/wiki/File:Sergio_Livingstone,_Universidad_Cat%C3%B3lica_3-2_Selecci%C3%B3n_de_Chile,_21_de_mayo_de_1950.png">Sergio Livingstone, 1950</a> (dominio público, Wikimedia Commons); <a href="https://www.rawpixel.com/image/6842483/photo-image-football-people-art">tribuna con copa</a> (Library of Congress, CC0, vía rawpixel).</p>
+    <p class="imprenta">Wonslimpiadas. Las ilustraciones de los campeones son del grupo; las fotos de archivo no son de los participantes: <a href="https://commons.wikimedia.org/wiki/File:Delegaci%C3%B3n_de_Chile_en_el_Mundial_1950,_Estadio,_1954-01-09_(556).jpg">plantel chileno, 1950</a> y <a href="https://commons.wikimedia.org/wiki/File:%C3%81lvarez,_Busquets_y_Carvallo,_Estadio,_1950-07-29_(376).jpg">portada de la revista Estadio, 1950</a> (dominio público, Wikimedia Commons); <a href="https://www.rawpixel.com/image/6842483/photo-image-football-people-art">tribuna con copa</a> (Library of Congress, CC0, vía rawpixel).</p>
   </div>
 </footer>
 <script src="js/app.js" type="module"></script>

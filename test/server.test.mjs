@@ -1,12 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { crearServidor } from '../server.mjs';
 
 const dir = mkdtempSync(path.join(tmpdir(), 'wons-'));
-copyFileSync(new URL('../data/evento.json', import.meta.url), path.join(dir, 'evento.json'));
+// evento de prueba propio: el real puede no tener equipos ni pruebas todavía
+writeFileSync(path.join(dir, 'evento.json'), JSON.stringify({
+  pruebas: [{ id: 'penales' }, { id: 'cuerda' }],
+  equipos: [{ id: 'loleros', nombre: 'Los Loleros' }, { id: 'callampa', nombre: 'Callampa FC' }],
+}));
 const srv = crearServidor({ dataDir: dir, adminPassword: 'secreto' });
 await new Promise((r) => srv.listen(0, '127.0.0.1', r));
 const base = `http://127.0.0.1:${srv.address().port}`;

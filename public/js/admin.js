@@ -31,7 +31,7 @@ async function entrar() {
     for (const [id, lista] of [['prueba', ev.pruebas], ['equipo', ev.equipos]])
       for (const x of lista) { const o = document.createElement('option'); o.value = x.id; o.textContent = x.nombre; $(id).append(o); }
   }
-  if (await historial()) { $('login').hidden = true; $('panel').hidden = false; msg(''); }
+  if (await historial()) { $('login').hidden = true; $('panel').hidden = false; msg(ev.equipos.length && ev.pruebas.length ? '' : 'Todavía no hay equipos o pruebas cargados en data/evento.json: la tabla se abre cuando existan.'); }
 }
 
 $('login').onsubmit = (e) => { e.preventDefault(); clave = $('clave').value; sessionStorage.setItem('wons-clave', clave); entrar().catch(sinRed); };

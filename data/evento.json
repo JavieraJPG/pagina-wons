@@ -4,22 +4,134 @@
   "anio": 2027,
   "fecha": null,
   "lugar": "POR DEFINIR",
-  "organizadores": ["Wonsrdinadores", "Nazzqi Nashito", "Mahomi Eliuom"],
-  "pruebas": [
-    { "id": "penales", "nombre": "Definición a penales", "horario": "POR DEFINIR", "formato": "Cinco tiros por equipo; si hay empate, muerte súbita.", "puntos": "10 · 6 · 4 · 2" },
-    { "id": "cuerda", "nombre": "Tirar la cuerda", "horario": "POR DEFINIR", "formato": "Eliminación directa, al mejor de tres tirones.", "puntos": "10 · 6 · 4 · 2" },
-    { "id": "sacos", "nombre": "Carrera de sacos", "horario": "POR DEFINIR", "formato": "Relevo de cuatro integrantes, ida y vuelta.", "puntos": "10 · 6 · 4 · 2" },
-    { "id": "huevo", "nombre": "Huevo y cuchara", "horario": "POR DEFINIR", "formato": "Si el huevo cae, se vuelve a la partida.", "puntos": "10 · 6 · 4 · 2" },
-    { "id": "trivia", "nombre": "Trivia Wons", "horario": "POR DEFINIR", "formato": "Veinte preguntas sobre la historia del grupo.", "puntos": "1 por respuesta" },
-    { "id": "karaoke", "nombre": "Karaoke final", "horario": "POR DEFINIR", "formato": "Una canción por equipo; vota el público.", "puntos": "15 · 10 · 5" }
+  "juego": "POR DEFINIR",
+  "jugadores": "POR DEFINIR",
+  "organizadores": [
+    "Wonsrdinadores",
+    "Nazzqi Nashito",
+    "Mahomi Eliuom"
   ],
-  "equipos": [
-    { "id": "apostoles", "nombre": "Apóstoles de Nashito", "color": "#ff1744", "integrantes": [] },
-    { "id": "loleros", "nombre": "Los Loleros", "color": "#2979ff", "integrantes": [] },
-    { "id": "callampa", "nombre": "Callampa FC", "color": "#e0e0e0", "integrantes": [] },
-    { "id": "chuchunco", "nombre": "Deportes Chuchunco City", "color": "#00c853", "integrantes": [] },
-    { "id": "enanito", "nombre": "Enanito FC", "color": "#111111", "integrantes": [] },
-    { "id": "orgullo", "nombre": "Orgullo CDF", "color": "#ffd600", "integrantes": [] },
-    { "id": "wons-united", "nombre": "Wons United", "color": "#ff80ab", "integrantes": [] }
+  "pruebas": [],
+  "equipos": [],
+  "ediciones": [
+    {
+      "anio": 2024,
+      "nombre": "La guerra en Minecraft",
+      "juego": "Minecraft",
+      "formato": "Dos equipos grandes, a capturar la bandera con ametralladoras.",
+      "nota": "Todavía no se llamaba Wonslimpiadas, pero ahí empezó todo."
+    },
+    {
+      "anio": 2025,
+      "nombre": "Wonslimpiadas",
+      "juego": "Mario Party 8",
+      "formato": "Individual, a puro minijuego.",
+      "ganador": "Felipe «Rikuto»",
+      "foto": null
+    },
+    {
+      "anio": 2026,
+      "nombre": "Wonslimpiadas 2",
+      "juego": "Mario Strikers (Switch)",
+      "formato": "En parejas, con un pozo de eliminados: empezó 2v2 y terminó en una final 4v4.",
+      "nota": "Se reveló con Mr. Increíble descubriendo la verdad: los jugadores fueron eliminados uno por uno por las Wonslimpiadas, menos el ganador.",
+      "ganador": "Orgullo CDF",
+      "foto": {
+        "src": "img/campeon-2026-orgullo-cdf.jpg",
+        "ancho": 1536,
+        "alto": 1024,
+        "alt": "Ilustración de Orgullo CDF, campeón 2026: cuatro integrantes celebran con una copa dorada frente a un sol en llamas."
+      },
+      "equipos": [
+        {
+          "nombre": "Apóstoles de Nashito",
+          "color": "#ff1744",
+          "integrantes": []
+        },
+        {
+          "nombre": "Los Loleros",
+          "color": "#2979ff",
+          "integrantes": []
+        },
+        {
+          "nombre": "Callampa FC",
+          "color": "#e0e0e0",
+          "integrantes": []
+        },
+        {
+          "nombre": "Deportes Chuchunco City",
+          "color": "#00c853",
+          "integrantes": []
+        },
+        {
+          "nombre": "Enanito FC",
+          "color": "#111111",
+          "integrantes": []
+        },
+        {
+          "nombre": "Orgullo CDF",
+          "color": "#ffd600",
+          "integrantes": []
+        },
+        {
+          "nombre": "Wons United",
+          "color": "#ff80ab",
+          "integrantes": []
+        }
+      ],
+      "subcampeon": {
+        "nombre": "Apóstoles de Nashito",
+        "foto": {
+          "src": "img/subcampeon-2026-apostoles.jpg",
+          "ancho": 1024,
+          "alto": 1536,
+          "alt": "Ilustración de los Apóstoles de Nashito: cuatro integrantes con una copa plateada bajo un escudo rojo con el nombre del equipo."
+        }
+      },
+      "partidos": [
+        {
+          "local": "Wons United",
+          "gl": 2,
+          "gv": 3,
+          "visita": "Orgullo CDF"
+        },
+        {
+          "local": "Wons United",
+          "gl": 2,
+          "gv": 1,
+          "visita": "Deportes Chuchunco City"
+        },
+        {
+          "local": "Wons United",
+          "gl": 1,
+          "gv": 4,
+          "visita": "Enanito FC"
+        },
+        {
+          "local": "Los Loleros",
+          "gl": 1,
+          "gv": 2,
+          "visita": "Apóstoles de Nashito"
+        },
+        {
+          "local": "Enanito FC",
+          "gl": 5,
+          "gv": 0,
+          "visita": "Callampa FC"
+        },
+        {
+          "local": "Deportes Chuchunco City",
+          "gl": 0,
+          "gv": 3,
+          "visita": "Orgullo CDF"
+        },
+        {
+          "local": "Apóstoles de Nashito",
+          "gl": 3,
+          "gv": 1,
+          "visita": "Enanito FC"
+        }
+      ]
+    }
   ]
 }
