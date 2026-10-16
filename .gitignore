@@ -1,0 +1,4 @@
+data/puntos.json
+data/puntos.json.tmp
+*.env
+.taste-skill/

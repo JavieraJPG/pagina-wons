@@ -1,39 +1,30 @@
-# pagina-wons
+# Wonslimpiadas 2027
 
-Sitio web estático que incluye los recursos (HTML, CSS, JS, imágenes, audio y video) necesarios para mostrar la página de Wons.
+Sitio sin framework ni compilación + servidor Node sin dependencias (Node 18+) que guarda los puntos de la tabla en vivo.
 
-## Requisitos
+- `public/index.html`: portada (la ficha del campeonato), pruebas, equipos y tabla en vivo.
+- `public/admin.html` (`/admin`): panel para cargar y deshacer puntos. La contraseña la valida el servidor.
+- `data/evento.json`: fecha, lugar, pruebas y equipos. Se edita en el repo (`fecha` en ISO, p. ej. `2027-03-20T10:00:00-03:00`; con fecha aparece la cuenta regresiva).
+- `data/puntos.json`: lo escribe el servidor; no se versiona.
+- `data/creditos-fotos.json`: origen y licencia de cada foto de `public/img/` (todas de archivo, ninguna es de los equipos).
+- `server.mjs`: estáticos + `GET /api/clasificacion`, `GET|POST /api/puntos`, `DELETE /api/puntos/:id` (Bearer `ADMIN_PASSWORD`).
 
-- Git para clonar el repositorio.
-- Un navegador moderno (Chrome, Firefox, Edge, etc.).
-- Opcional: Node.js 18+ y npm 9+ o Python 3 si deseas ejecutar un servidor local.
+## Ejecutar en local
+```bash
+ADMIN_PASSWORD=clave node server.mjs   # http://127.0.0.1:8787 (PORT y HOST opcionales)
+node --test
+```
 
-## Instalación de dependencias
+## Publicar en QA (192.168.1.170)
+QA ya corre este servidor: el contenedor `wons-qa` (node:22-alpine) monta `/mnt/datos/wons/src` en `/app`, ejecuta `node server.mjs` y toma `ADMIN_PASSWORD` de `/mnt/datos/wons/secrets/qa.env`. Caddy publica `qa-wons.cinderlink.cl` (tras Authelia) hacia `127.0.0.1:3101`.
 
-El proyecto no tiene dependencias propias ni `package.json`; basta con descargar el código.  
-Si quieres ejecutar la página mediante un servidor local puedes usar cualquiera de estas opciones:
+```bash
+ssh nazdev@192.168.1.170
+cd /mnt/datos/wons/src
+git fetch origin && git checkout Nazdev-paginawons && git pull
+systemctl --user restart wons-qa
+```
+`data/puntos.json` de QA no se toca: está fuera de git.
 
-- **Node.js**: instala el paquete `serve` de manera global `npm install --global serve`.
-- **Python 3**: viene con un servidor HTTP simple listo para usar, no requiere instalación adicional.
-
-## Ejecución
-
-1. Clona el proyecto  
-   ```bash
-   git clone https://github.com/<usuario>/pagina-wons.git
-   cd pagina-wons
-   ```
-2. Ejecuta la página:
-   - **Abrir el archivo directamente**: haz doble clic en `index.html` o ábrelo desde tu navegador preferido. Esta pantalla muestra la vista de password y, tras ingresar la contraseña correcta, te llevará al menú y desde ahí al cuestionario (`quiz.html`).
-   - **Usando Node.js + serve**:  
-     ```bash
-     serve .
-     ```
-     Luego abre `http://localhost:3000` (o el puerto que indique el comando).
-   - **Usando Python 3**:  
-     ```bash
-     python -m http.server 8000
-     ```
-     Luego navega a `http://localhost:8000`.
-
-Con cualquiera de las alternativas el navegador cargará `index.html` (pantalla de contraseña) y los recursos que se encuentran en el directorio `static/`.
+## Producción (pendiente)
+`wons-prod` hoy es un Caddy estático sobre `/mnt/datos/wons/prod` (sitio anterior). La tabla en vivo necesita el servidor Node, así que producción debe pasar a la misma definición que `wons-qa` (otro puerto, `3102`, y su propio `secrets/prod.env`). Nunca subas la contraseña al repo.

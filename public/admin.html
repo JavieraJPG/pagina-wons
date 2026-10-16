@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#ff7a1f">
+<title>Panel de puntos · Wonslimpiadas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="admin">
+  <div class="hoja">
+    <h1>Panel de puntos</h1>
+    <form id="login">
+      <label for="clave">Contraseña
+        <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+      </label>
+      <button type="submit">Entrar</button>
+    </form>
+    <div id="panel" hidden>
+      <form id="form">
+        <label for="prueba">Prueba <select id="prueba" name="prueba" required></select></label>
+        <label for="equipo">Equipo <select id="equipo" name="equipo" required></select></label>
+        <label for="puntos">Puntos (negativos para restar)
+          <input id="puntos" name="puntos" type="number" step="1" min="-1000" max="1000" inputmode="numeric" autocomplete="off" placeholder="10…" required>
+        </label>
+        <button type="submit">Cargar puntos</button>
+      </form>
+      <h2>Últimas cargas</h2>
+      <ul id="hist" class="hist"></ul>
+      <button id="salir" class="sec" type="button">Salir</button>
+    </div>
+    <p id="msg" class="msg" role="status" aria-live="polite"></p>
+    <a class="volver" href="/">Volver a la página</a>
+  </div>
+</main>
+<script src="js/admin.js" type="module"></script>
+</body>
+</html>
