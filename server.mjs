@@ -114,7 +114,8 @@ export function crearServidor({ dataDir = path.join(RAIZ, 'data'), adminPassword
       res.writeHead(200, {
         'Content-Type': TIPOS[path.extname(archivo)] || 'application/octet-stream',
         'X-Content-Type-Options': 'nosniff',
-        'Cache-Control': archivo === archivoEvento ? 'no-cache' : 'public, max-age=300',
+        // páginas, código y datos se revisan siempre: tras publicar nadie ve una mezcla de versiones
+        'Cache-Control': /\.(png|jpe?g|webp|ico|svg|woff2)$/.test(archivo) ? 'public, max-age=86400' : 'no-cache',
       });
       res.end(req.method === 'HEAD' ? undefined : datos);
     } catch { res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' }); res.end('No encontrado'); }

@@ -50,5 +50,7 @@ test('bloquea ../ y sirve el índice', async () => {
     });
     assert.doesNotMatch(res, /createHash|"puntos"|^HTTP\/1.1 200/);
   }
-  assert.equal((await fetch(base + '/')).status, 200);
+  const inicio = await fetch(base + '/');
+  assert.equal(inicio.status, 200);
+  assert.equal(inicio.headers.get('cache-control'), 'no-cache'); // tras publicar no debe quedar la versión vieja
 });
